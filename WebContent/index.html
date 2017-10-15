@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin Homepage</title>
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+	<!-- Angular Script-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
+	
+	
+
+	<!--Font Awesome CDS -->
+	<script src="https://use.fontawesome.com/d68c434173.js"></script>
+	
+	<style type="text/css">
+   .jumbotron{
+    background:black;
+    color:white;
+   }
+
+  </style>
+	</head>
+	
+<body ng-app="myApp" ng-controller="myCtrl" ng-init="initial()">
+	
+	<div class="jumbotron">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-7">&nbsp;</div>
+			<a class="btn btn-success col-sm-2" href="http://localhost:8080/Todo/rest/app/returnAdmin">Refresh</a>
+			<div class="col-sm-1">&nbsp;</div>
+			<a class="btn btn-light com-sm-2" href="http://localhost:8080/Todo/homepage.html">Logout</a>
+		</div>
+		<div class="row"><div class="col-sm-12"><p></p></div></div>
+		<div class="row">
+		<div class="col-sm-3">&nbsp;</div>
+		<h1 class="col-sm-8 display-3">Welcome Admin</h1>
+		</div>
+
+		<p style="padding: 10px;"></p>
+		
+		<!-- Buttons -->
+		<div class="row">
+			<!-- New Todo Button -->
+			<button type="button" class="btn btn-primary col-sm-2" data-toggle="modal" data-target="#todoModal">New Todo</button>
+			
+			<!-- New Employee Button -->
+			<div class="col-sm-8">&nbsp;</div>
+			<button type="button" class="btn btn-info col-sm-2" data-toggle="modal" data-target="#employeeModal">New Employee</button>
+		</div>
+		
+		<!-- Button for Employee List -->
+		<p style="padding:5px;"></p>
+		<div class="row">
+			<div class="col-sm-10">&nbsp;</div>
+			<button type="button" class="btn btn-warning col-sm-2" data-toggle="modal" data-target="#exampleModal"
+			ng-mouseover="getEmployee()" ng-mouseenter="getEmployee()">
+  Employee List
+</button>
+		</div>
+	</div>
+	</div>
+	
+	<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Employee List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+        	<thead class="thead-inverse">
+        		<tr>
+        			<th>Name</th>
+        			<th>Password</th>
+        			<th>&nbsp;</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		<tr ng-repeat="y in empList">
+        			<td>{{y.name}}</td>
+        			<td>{{y.password}}</td>
+        			<td><button type="button" class="btn btn-danger" id={{y.id}} ng-click="delEmployee($event)">Delete</button></td>
+        		</tr>
+        	</tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+	
+	<!-- Modal  for New Todo-->
+<div class="modal fade" id="todoModal" tabindex="-1" role="dialog" aria-labelledby="todoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Todo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      	<form action="http://localhost:8080/Todo/rest/app/todo" method="POST">
+      		<div class="row">
+      			<div class = "col">
+      				<input type="text" name="content" class="form-control" placeholder="Content">
+      			</div>
+      		</div>
+      	
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      	</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for New Employee-->
+
+<div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Employee</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      	<form action="http://localhost:8080/Todo/rest/app/employee" method="POST">
+      		<div class="row">
+      			<div class = "col">
+      				<input type="text" name="name" class="form-control" placeholder="Name">
+      			</div>
+      		</div>
+      		<div class="row">
+      			<div class = "col">
+      				<input type="password" name="password" class="form-control" placeholder="Password">
+      			</div>
+      		</div>
+      	
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" >Submit</button>
+      	</form>
+      </div>
+    </div>
+  </div>
+</div>
+		
+		<!-- Some Gap -->
+		<p style="padding:30px;"></p>
+		
+		<!-- button type="button" class="btn btn-success" ng-click="getData()">Show List</button> -->
+
+	<!-- Creating the list -->
+	
+	<div class="container">
+		<h1>To-Do List</h1>
+	<ul class="list-group">
+		<li ng-repeat="x in myVal" class="{{colors[x.status]}}"  id={{x.id}}>
+		
+			<div class="row">
+			<div class = "col-sm-4">{{x.content}}</div> 
+			
+			<!-- Dropdown to change status -->
+			<div class="col-sm-5">
+			<div class="dropdown">
+  				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    				Change Status
+  				</button>
+  				<div class="dropdown-menu" aria-labelledby="dropdown">
+    			<a class="dropdown-item" href="" ng-click="update($event)" id={{x.id}} name="incomplete">incomplete</a>
+    			<a class="dropdown-item" href="" ng-click="update($event)" id={{x.id}} name="started">started</a>
+    			<a class="dropdown-item" href="" ng-click="update($event)" id={{x.id}} name="finished">finished</a>
+  				</div>
+			</div>
+			
+			
+		</div>
+		<!-- Update Button -->
+			<button type="button" class="btn btn-primary col-sm-2" data-toggle="modal" data-target="#updateModal"  
+			ng-mouseover="updateVal($event)" ng-mouseleave="updateVal($event)" ng-mouseenter="updateVal($event)" id={{x.id}}
+			>Update Todo</button>
+			
+		<!-- Delete Button -->
+			<button type="button" class="btn btn-danger" id={{x.id}} ng-click="delTodo($event)"
+			ng-mouseover="delVal($event)" ng-mouseleave="delVal($event)" ng-mouseenter="delVal($event)"
+			>Delete</button>
+		
+		<!-- Badge showing Status -->
+		<span class="badge badge-dark col-sm-1">{{x.status}}</span>
+		</div>
+		</li>
+	</ul>
+	
+	<!-- Modal for Todo Update -->
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateModalLabel">Update Todo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      	<form action="http://localhost:8080/Todo/rest/app/updateTodo/" method="POST">
+      		<div class="row">
+      			<div class = "col">
+      				<input type="number" name="id" class="form-control" value={{updateId}}>
+      			</div>
+      		</div>
+      		
+      		<div class="row">
+      			<div class = "col">
+      				<input type="text" name="content" class="form-control" placeholder=" New Content">
+      			</div>
+      		</div>
+      	
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+      	</form>
+      </div>
+    </div>
+  </div>
+  
+
+	</div>
+
+
+
+<!-- Bootstrap Scripts-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+<script>
+	
+	var app = angular.module("myApp",[]);
+	app.controller("myCtrl", function($scope,$http,$window){
+		$scope.getData = function()
+		{
+			$http.get("http://localhost:8080/Todo/rest/app/getTodo")
+			.then(function(response){
+				$scope.myVal=response.data;
+			});
+		}
+		$scope.initial = function()
+		{
+			
+			$deleteId=0;
+			$scope.updateId=0;
+			$scope.myVal={'content':'No Todo','id':0,'status':'no'};
+			$scope.getData();
+			$scope.colors={'incomplete':'list-group-item list-group-item-danger','started':'list-group-item list-group-item-warning','finished':'list-group-item list-group-item-success','no':'list-group-item list-group-item-secondary'};
+		}
+		
+		$scope.update = function($event)
+		{
+			
+			var id = angular.element($event.target).attr('id');
+			var newStatus = angular.element($event.target).attr('name');
+			
+			console.log(id+" "+newStatus+" clicked");
+			
+			$http.post('http://localhost:8080/Todo/rest/app/'+id+'/'+newStatus)
+			.then(function(data){
+				$window.location.href='http://localhost:8080/Todo/rest/app/returnAdmin';		
+							
+			});
+		}
+		
+		$scope.updateVal = function($event)
+		{
+			$scope.updateId= angular.element($event.target).attr('id');
+			console.log("updateId updated to "+$scope.updateId);
+		}
+		
+		$scope.delTodo= function()
+		{
+			var delId = $scope.deleteId;
+			console.log("deleteId updated to "+delId);
+			
+			$http.post('http://localhost:8080/Todo/rest/app/deleteTodo/'+delId)
+			.then(function(data){
+				$window.location.href='http://localhost:8080/Todo/rest/app/returnAdmin';
+			});
+		}
+		
+		$scope.delVal = function($event)
+		{
+			$scope.deleteId = angular.element($event.target).attr('id');
+			console.log("deleteId updated to "+$scope.deleteId);
+			console.log($scope.myVal);
+		}
+		
+		$scope.getEmployee = function()
+		{
+			$http.get('http://localhost:8080/Todo/rest/app/empList')
+			.then(function(response){
+				$scope.empList = response.data;
+			});
+		}
+		
+		$scope.delEmployee = function($event)
+		{
+			var delId = angular.element($event.target).attr('id');
+			console.log("employee id deleted is "+delId);
+			
+			$http.get('http://localhost:8080/Todo/rest/app/deleteEmp/'+delId)
+			.then(function(response){
+				$window.location.href='http://localhost:8080/Todo/rest/app/returnAdmin';
+			});
+			
+		}
+		
+	});
+</script>
+</html>
